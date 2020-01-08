@@ -1,0 +1,721 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="tetris,game,javascript,jquery,html,css" />
+<meta name="description" content="a simple tetris game"/>
+<meta name="Author" content="Wangda Xu" />
+<title>Tetris</title>
+<script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
+
+<style>
+html,body { overflow:hidden; overflow-x:hidden; overflow-y:hidden; }
+body{
+	font:1em "Comic Sans MS", cursive;
+	background:url(abstract-blue-backgrounds-40_1920x1200_71456.jpg) center no-repeat;
+	overflow:hidden;
+}
+td{
+width: 30px; 
+height: 30px; 	
+box-shadow: -2px -2px 10px rgba(0,0,0,.3) inset, 2px 2px 10px white inset;
+-moz-box-shadow: -2px -2px 10px rgba(0,0,0,.3) inset, 2px 2px 10px white inset;
+text-indent:-9999px;
+background-color:#FFF;
+}
+
+#board, #newBoard{
+	-webkit-box-shadow: 0px 0px 5px 4px #666;
+box-shadow: 0px 0px 5px 4px #666; 
+}
+#wrapper{
+	margin:0 auto;
+	width:800px;
+	margin-top:100px;
+}
+#side{
+	float:left;
+	width:200px;
+}
+#main{
+	float:left;
+	width:500px;
+	
+	
+}
+</style>
+
+</head>
+<body>
+<div id="wrapper">
+	<div id="side">
+		<Input  id="btn" type="button" value="Start" />
+		<p id="score">Scores: 0</p>
+        <p>Use "Arrow Keys"<br /> to move and rotate</p><br />Click "Enter" to pause<br /><br /></p>
+        <table id="newBoard" cellspacing=0 cellpadding=0 border=0 style="border-collapse:collapse;"> 
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+	</div>
+  <div id="main">  
+<table id="board" cellspacing=0 cellpadding=0 border=0 style="border-collapse:collapse;"> 
+<tr> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+</tr> 
+<tr> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+</tr> 
+<tr> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+</tr> 
+<tr> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+</tr> 
+<tr> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+</tr> 
+<tr> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+</tr> 
+<tr> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+</tr> 
+<tr> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+</tr> 
+<tr> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+</tr> 
+<tr> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+</tr> 
+<tr> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+</tr> 
+<tr> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+</tr> 
+<tr> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+</tr> 
+<tr> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+</tr> 
+<tr> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+</tr> 
+<tr> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+</tr> 
+<tr> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+</tr> 
+<tr> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+<td></td> 
+</tr> 
+</table> 
+
+</div>
+
+</div>
+
+<!---------------------
+//                   //
+//    Game codes     //
+//                   //
+---------------------->
+<script type="text/javascript">
+var score=0;
+var timer;
+var activeBlock;
+var gamestart=0;
+////// 创建游戏面板 赋值0给没有被占的单元格
+var tbl=document.getElementById("board");
+var cells=tbl.getElementsByTagName("td");
+for(var i=0;i<cells.length;i++){
+	cells[i].innerHTML=0;
+}
+0
+///// New table to store next pattern
+var newtbl=document.getElementById("newBoard");
+var newcells=newtbl.getElementsByTagName("td");
+for(var i=0;i<newcells.length;i++){
+	newcells[i].innerHTML=0;
+}
+
+function drawNextPattern(){
+	for(var i=0;i<8;i++){
+		if(newcells[i].innerHTML==1)
+			newcells[i].style.backgroundColor="grey";
+		if(newcells[i].innerHTML==2)
+			newcells[i].style.backgroundColor="cyan";
+		if(newcells[i].innerHTML==3)
+			newcells[i].style.backgroundColor="red";
+		if(newcells[i].innerHTML==4)
+			newcells[i].style.backgroundColor="green";
+		if(newcells[i].innerHTML==5)
+			newcells[i].style.backgroundColor="purple";
+		if(newcells[i].innerHTML==6)
+			newcells[i].style.backgroundColor="blue";
+		if(newcells[i].innerHTML==7)
+			newcells[i].style.backgroundColor="orange";
+	}	
+}
+function clearNextPattern(){
+	for(var i=0;i<newcells.length;i++){
+		newcells[i].innerHTML=0;
+		newcells[i].style.backgroundColor="white";
+	}
+}
+document.onkeydown=function(e){
+	e=e ? e : window.event;
+	var keyCode=e.which ? e.which : e.keyCode;
+		switch(keyCode)
+	{
+		case 37:
+			leftMove();
+			//alert("left");
+			break;		
+		case 38: 
+			rotation(); 
+		//	alert("rotate");
+			break; 
+		case 39: 
+			rightMove(); 
+			break; 		
+		case 40: 
+			downMove(); 
+			break; 
+		case 13:
+			alert("Game Paused.  Click 'OK'  to continue.");	
+			break;
+		 
+	}
+}
+
+///// 开始游戏
+$("#btn").click(function(){
+	if(gamestart==0){
+		gamestart=1;
+		document.getElementById("btn").value="Gaming...";
+		if(!generatePattern()){
+			return;
+		}
+		drawPattern();
+	
+		timer=setInterval(downMove, 300);
+	//$("#btn:button").attr("disabled","disabled");
+	}
+});
+
+var currentNum = Math.floor(Math.random()*7);
+var color;
+///// 随机生成图形
+function generatePattern(){
+	clearNextPattern();
+	activeBlock=null;
+	activeBlock= new Array(4);
+	var nextNum = Math.floor(Math.random()*7);// generate a random number between 0-6
+	//alert(nextNum);
+	switch(currentNum){	
+		case 0:{
+		// 方块
+			color=1;
+			activeBlock[0] = {x:0, y:4}; 
+			activeBlock[1] = {x:0, y:5}; 
+			activeBlock[2] = {x:1, y:4}; 
+			activeBlock[3] = {x:1, y:5}; 
+			break;
+		}
+		case 1:{
+		// 长条
+			color=2;
+			activeBlock[0] = {x:0, y:3}; 
+			activeBlock[1] = {x:0, y:4}; 
+			activeBlock[2] = {x:0, y:5}; 
+			activeBlock[3] = {x:0, y:6}; 
+			break;	
+		}
+		case 2:{
+		// Z字形
+			color=3;
+			activeBlock[0] = {x:0, y:4}; 
+			activeBlock[1] = {x:0, y:5}; 
+			activeBlock[2] = {x:1, y:5}; 
+			activeBlock[3] = {x:1, y:6}; 
+			break;	
+		}
+		case 3:{
+		// 反Z字形
+			color=4;
+			activeBlock[0] = {x:1, y:4}; 
+			activeBlock[1] = {x:1, y:5}; 
+			activeBlock[2] = {x:0, y:5}; 
+			activeBlock[3] = {x:0, y:6}; 
+			break;	
+		}
+		case 4:{
+		// T字形
+			color=5;
+			activeBlock[0] = {x:0, y:4}; 
+			activeBlock[1] = {x:0, y:5}; 
+			activeBlock[2] = {x:0, y:6}; 
+			activeBlock[3] = {x:1, y:5}; 
+			break;	
+		}
+		case 5:{
+		// L字形
+			color=6;
+			activeBlock[0] = {x:0, y:4}; 
+			activeBlock[1] = {x:0, y:5}; 
+			activeBlock[2] = {x:0, y:6}; 
+			activeBlock[3] = {x:1, y:4}; 
+			break;	
+		}
+		case 6:{
+		// 反L字形
+			color=7;
+			activeBlock[0] = {x:0, y:4}; 
+			activeBlock[1] = {x:0, y:5}; 
+			activeBlock[2] = {x:0, y:6}; 
+			activeBlock[3] = {x:1, y:6}; 
+			break;	
+		}
+	}
+	for(var i=0;i<4;i++){
+		if(!isPositionValid(activeBlock[i].x,activeBlock[i].y))
+			return false;
+	}	
+	switch(nextNum){
+		case 0:{
+			newcells[0].innerHTML=newcells[1].innerHTML=newcells[4].innerHTML=newcells[5].innerHTML=1;	
+			break;				
+		}
+		case 1:{
+			newcells[0].innerHTML=newcells[1].innerHTML=newcells[2].innerHTML=newcells[3].innerHTML=2;
+			break;
+		}
+		case 2:{
+			newcells[0].innerHTML=newcells[1].innerHTML=newcells[5].innerHTML=newcells[6].innerHTML=3;
+			break;
+		}
+		case 3:{
+			newcells[1].innerHTML=newcells[2].innerHTML=newcells[4].innerHTML=newcells[5].innerHTML=4;
+			break;
+		}
+		case 4:{
+			newcells[0].innerHTML=newcells[1].innerHTML=newcells[2].innerHTML=newcells[5].innerHTML=5;
+			break;
+		}
+		case 5:{
+			newcells[0].innerHTML=newcells[1].innerHTML=newcells[2].innerHTML=newcells[4].innerHTML=6;
+			break;
+		}
+		case 6:{
+			newcells[0].innerHTML=newcells[1].innerHTML=newcells[2].innerHTML=newcells[6].innerHTML=7;
+			break;
+		}
+	}
+	drawNextPattern(); 
+	currentNum=nextNum;
+	return true;
+}
+
+////// 左移
+function leftMove(){
+	if(leftMoveCheck()==true){
+		deletePattern();
+		for(var i=0;i<4;i++){
+			activeBlock[i].y--;
+		}
+		drawPattern();
+	}
+}
+////// 右移
+function rightMove(){
+	if(rightMoveCheck()==true){
+		deletePattern();
+		for(var i=0;i<4;i++){
+			activeBlock[i].y++;
+		}
+		drawPattern();
+	}
+}
+////// 下移
+function downMove(){
+	if(downMoveCheck()==true){
+		deletePattern();
+		for(var i=0;i<4;i++){
+			activeBlock[i].x++;
+		}
+		drawPattern();
+	}
+	//触底
+	else{
+		clearInterval(timer);
+		updateBoard();
+		var line=deleteLine();
+		if(line!=0){
+			drawBoard();
+		}
+		if(!generatePattern()){ //////// 游戏结束
+			alert("Game Over"); gamestart=0;
+			document.getElementById("btn").value="Start";
+			document.getElementById("score").innerHTML="Scores: 0";
+			$("#btn:button").removeAttr("disabled");
+			for(var i=0;i<cells.length;i++){
+				cells[i].innerHTML=0;
+			}
+			drawBoard();
+			return;	
+		}
+		drawPattern();
+		timer=setInterval(downMove,300);
+	}
+}
+////// 旋转
+function rotation(){
+	var tempBlock=new Array(4); // 创建临时图形
+	for(var i=0;i<4;i++){
+		tempBlock[i]={x:0,y:0};
+	}
+	for(var i=0;i<4;i++){ // 把activeBlock复制到tempBlock
+		tempBlock[i].x=activeBlock[i].x;
+		tempBlock[i].y=activeBlock[i].y;
+	}
+	// 算出图形的中心点
+	var cx = Math.round((tempBlock[0].x + tempBlock[1].x + tempBlock[2].x + tempBlock[3].x)/4); 
+	var cy = Math.round((tempBlock[0].y + tempBlock[1].y + tempBlock[2].y + tempBlock[3].y)/4); 
+	// 把图形围绕原点旋转后的坐标 加上中心点的坐标
+	for(var i=0; i<4; i++){ 
+		tempBlock[i].x = cx+cy-activeBlock[i].y; 
+		tempBlock[i].y = cy-cx+activeBlock[i].x; 
+	} 
+	//检查旋转后是否合法
+	for(var i=0; i<4; i++){ 
+		if(!isPositionValid(tempBlock[i].x, tempBlock[i].y)) // 不合格的话 return
+			return;
+	} 
+	// 合格的话
+	deletePattern();
+	// 把tempBlock复制给activeBlock
+	for(var i=0; i<4; i++){ 
+		activeBlock[i].x=tempBlock[i].x;
+		activeBlock[i].y=tempBlock[i].y;
+	} 
+	drawPattern();	
+}
+////// 检查图形的坐标是否合法
+function isPositionValid(x,y){	
+	if(x<0 || x>17 || y<0 || y>9){	//图形是否超出边界
+		return false;	
+	}
+	if(tbl.rows[x].cells[y].innerHTML !=0 ){//图形坐标是否已经被占
+		return false;	
+	}
+	return true;
+}
+////////检查能否左移
+function leftMoveCheck(){
+	for(var i=0;i<4;i++){ //
+		if(activeBlock[i].y==0)
+			return false;
+		if(!isPositionValid(activeBlock[i].x, activeBlock[i].y-1))
+			return false;											   	
+	}
+	return true;
+}
+////////检查能否右移
+function rightMoveCheck(){
+	for(var i=0;i<4;i++){ //
+		if(activeBlock[i].y==9)
+			return false;
+		if(!isPositionValid(activeBlock[i].x, activeBlock[i].y+1))
+			return false;											   	
+	}
+	return true;
+}
+////////检查能否下移
+function downMoveCheck(){
+	for(var i=0;i<4;i++){ //
+		if(activeBlock[i].x==17)
+			return false;
+		if(!isPositionValid(activeBlock[i].x+1, activeBlock[i].y)){
+			//alert("cant move down");
+			return false;			
+		}
+	}
+	return true;
+}
+///////　绘制活动图形（给单元格上色）
+function drawPattern(){
+	for(var i=0;i<4;i++){
+		if(color==1)
+			tbl.rows[activeBlock[i].x].cells[activeBlock[i].y].style.backgroundColor="grey";
+		if(color==2)
+			tbl.rows[activeBlock[i].x].cells[activeBlock[i].y].style.backgroundColor="cyan";
+		if(color==3)
+			tbl.rows[activeBlock[i].x].cells[activeBlock[i].y].style.backgroundColor="red";
+		if(color==4)
+			tbl.rows[activeBlock[i].x].cells[activeBlock[i].y].style.backgroundColor="green";
+		if(color==5)
+			tbl.rows[activeBlock[i].x].cells[activeBlock[i].y].style.backgroundColor="purple";
+		if(color==6)
+			tbl.rows[activeBlock[i].x].cells[activeBlock[i].y].style.backgroundColor="blue";	
+		if(color==7)
+			tbl.rows[activeBlock[i].x].cells[activeBlock[i].y].style.backgroundColor="orange";	
+	}
+}
+////// 删除活动图形
+function deletePattern(){
+	for(var i=0;i<4;i++){
+		tbl.rows[activeBlock[i].x].cells[activeBlock[i].y].style.backgroundColor="white";
+		//tbl.rows[activeBlock[i].x].cells[activeBlock[i].y].className="transparent";
+	}
+}
+////// 把活动图形对应的位置数值变为1－7
+function updateBoard(){
+	for(var i=0;i<4;i++){
+		if(color==1)
+			tbl.rows[activeBlock[i].x].cells[activeBlock[i].y].innerHTML=1;
+		if(color==2)
+			tbl.rows[activeBlock[i].x].cells[activeBlock[i].y].innerHTML=2;
+		if(color==3)
+			tbl.rows[activeBlock[i].x].cells[activeBlock[i].y].innerHTML=3;
+		if(color==4)
+			tbl.rows[activeBlock[i].x].cells[activeBlock[i].y].innerHTML=4;
+		if(color==5)
+			tbl.rows[activeBlock[i].x].cells[activeBlock[i].y].innerHTML=5;
+		if(color==6)
+			tbl.rows[activeBlock[i].x].cells[activeBlock[i].y].innerHTML=6;
+		if(color==7)
+			tbl.rows[activeBlock[i].x].cells[activeBlock[i].y].innerHTML=7;
+	}
+}
+////// 把board上数值为1的单元格变为红色
+function drawBoard(){
+	for(var i=0;i<18;i++){
+		for(var j=0;j<10;j++){
+			if(tbl.rows[i].cells[j].innerHTML==0)
+				tbl.rows[i].cells[j].style.backgroundColor = "white";
+			if(tbl.rows[i].cells[j].innerHTML==1)
+				tbl.rows[i].cells[j].style.backgroundColor = "grey";		
+			if(tbl.rows[i].cells[j].innerHTML==2)
+				tbl.rows[i].cells[j].style.backgroundColor = "cyan";		
+			if(tbl.rows[i].cells[j].innerHTML==3)
+				tbl.rows[i].cells[j].style.backgroundColor = "red";		
+			if(tbl.rows[i].cells[j].innerHTML==4)
+				tbl.rows[i].cells[j].style.backgroundColor = "green";		
+			if(tbl.rows[i].cells[j].innerHTML==5)
+				tbl.rows[i].cells[j].style.backgroundColor = "purple";		
+			if(tbl.rows[i].cells[j].innerHTML==6)
+				tbl.rows[i].cells[j].style.backgroundColor = "blue";
+			if(tbl.rows[i].cells[j].innerHTML==7)
+				tbl.rows[i].cells[j].style.backgroundColor = "orange";					
+		}
+	}
+}
+////// 消行
+function deleteLine(){
+	var line=0;
+	for(var i=0;i<18;i++){
+		for(var j=0;j<10;j++){
+			if(tbl.rows[i].cells[j].innerHTML==0)
+				break;
+		}
+		if(j==10){
+			line++;
+			
+			if(i!=0){
+				//alert(i);
+				for(var x=i;x>0;x--){
+					for(var y=0;y<10;y++){
+						tbl.rows[x].cells[y].innerHTML=tbl.rows[x-1].cells[y].innerHTML;	}
+				}
+			}
+		}
+		for(var k=0;k<10;k++)
+			tbl.rows[0].cells[k].innerHTML=0;	
+	}
+	score=score+line;
+	document.getElementById("score").innerHTML="Scores: "+score;
+	return line;
+}
+
+
+
+</script>
+</body>
+</html>
